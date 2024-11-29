@@ -1,24 +1,23 @@
-from base_sprites import Sprite, Button, TextSprite, UISprite
-from constants import colors, fonts
+from base_sprites import Sprite, Button, TextSprite, UISprite, ImageSprite
+from constants import colors, fonts, dimens as d
 from buttons import *
 import pygame
 
 DEFAULT_FONT = "segoeui"
 DEFAULT_FONT_SIZE = 40
 
-class MainMenu:
-    def __init__(self, pos):
-        x, y = pos
+class MainMenu(UISprite):
+    def __init__(self):
+        super().__init__((d.SCREEN_WIDTH, d.SCREEN_HEIGHT))
         self.sprites = pygame.sprite.LayeredUpdates()
-        self.mmImage = base_sprites.ImageSprite("ww3_pygame/images/russia-map3.png", (x, y + 200))
-        self.title = base_sprites.TextSprite("World War 3", fonts.COUNTRY_TITLE_FONT, (255,255,255), pos, 50)
-        self.bgColor = (0,0,0)
-       
-        self.startButton = StartButton((x, y + 200))
-        self.quitButton = QuitButton((x, y + 300))
+        self.elements["bgImage"] = ImageSprite("ww3_pygame/images/russia-map3.png", (self.width / 2, self.height / 2))
+        self.elements["title"] = TextSprite("World War 3", fonts.COUNTRY_TITLE_FONT, (255,255,255), (self.width / 2, 50 * d.SCALE_FACTOR), int(40 * d.SCALE_FACTOR))
+        self.elements["startButton"] = StartButton((self.width / 2, self.elements["title"].rect.y + (100 * d.SCALE_FACTOR)))
+        self.elements["quitButton"] = QuitButton((self.width / 2, self.elements["startButton"].rect.y + (50 * d.SCALE_FACTOR)))
+        #self.bgColor = (0,0,0)
         
         #Add all sprites to sprite list
-        self.sprites.add(self.mmImage, self.title, self.startButton, self.quitButton)
+        self.sprites.add(self.elements.values())
 
 class EscapeMenu:
     def __init__(self, dimens):

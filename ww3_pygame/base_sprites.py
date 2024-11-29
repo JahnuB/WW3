@@ -49,9 +49,13 @@ class CountrySprite(pygame.sprite.Sprite):
                 #    for point in geometry.exterior.coords: print(point)
 
 
+#ISprite contains anything interactable that is drawn on the screen.
+#UISprite can contain other UISprites.
 class UISprite(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, size):
         super().__init__()
+        self.width = size[0]
+        self.height = size[1]
         self.updateElements = False
         self.elements = {}  #Key: description; Value: TextSprite/Sprite
     

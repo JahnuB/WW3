@@ -6,7 +6,7 @@ import events
 from map_screen import *
 from enum import Enum
 from country import *
-from constants import fonts
+from constants import fonts, dimens as d
 import datetime
 
 class Screen(Enum):
@@ -20,26 +20,21 @@ def removeOtherMenus(sprites, r_menus):
 
 def main():
     pygame.init()
-
-    SCREEN_WIDTH = 1920
-    SCREEN_HEIGHT = 1080
-    SCALE_FACTOR_X = SCREEN_WIDTH / 800     #Min supported width
-    SCALE_FACTOR_Y = SCREEN_HEIGHT / 600    #Min supported height
     
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))#, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((d.SCREEN_WIDTH, d.SCREEN_HEIGHT))#, pygame.FULLSCREEN)
 
     clock = pygame.time.Clock()
     running = True
 
     sprites = pygame.sprite.LayeredUpdates()
-    background = Sprite(screen.get_size(), (20,20,20), (SCREEN_WIDTH/ 2, SCREEN_HEIGHT / 2))
+    background = Sprite(screen.get_size(), (20,20,20), (d.SCREEN_WIDTH/ 2, d.SCREEN_HEIGHT / 2))
     sprites.add(background)
 
     #Escape and Options Menu
     escapeMenu = optionsMenu = None
 
     #Main Menu Setup
-    mainMenu = MainMenu((SCREEN_WIDTH / 2, 100))
+    mainMenu = MainMenu()
     sprites.add(mainMenu.sprites)
     currentScreen = Screen.MAIN_MENU
 
@@ -52,10 +47,10 @@ def main():
     #statMenus = [popMenu, ecoMenu, relMenu, resMenu, milMenu] #Change to dict
 
     #Map Screen
-    mapScreen = MapUI((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+    mapScreen = MapUI((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
     
     currentDay = datetime.datetime.now()
-    currentDaySprite = TextSprite(str(currentDay.strftime("%x")), fonts.DEFAULT_TITLE, (255,255,255), (50 * SCALE_FACTOR_X, SCREEN_HEIGHT - (25 * SCALE_FACTOR_Y)), 25)
+    currentDaySprite = TextSprite(str(currentDay.strftime("%x")), fonts.DEFAULT_TITLE, (255,255,255), (50 * d.SCALE_FACTOR, d.SCREEN_HEIGHT - (25 * d.SCALE_FACTOR)), 25)
     
     currentFPS = TextSprite("", fonts.DEFAULT_TITLE, (255,255,255), (10,10), 15)
     
@@ -92,12 +87,12 @@ def main():
                                     sprites.remove(escapeMenu.sprites)
                                     escapeMenu = None
                                 elif optionsMenu:
-                                    escapeMenu = EscapeMenu((SCREEN_WIDTH, SCREEN_HEIGHT))
+                                    escapeMenu = EscapeMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT))
                                     sprites.remove(optionsMenu.sprites)
                                     sprites.add(escapeMenu.sprites)
                                     optionsMenu = None
                                 else:
-                                    escapeMenu = EscapeMenu((SCREEN_WIDTH, SCREEN_HEIGHT))
+                                    escapeMenu = EscapeMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT))
                                     sprites.add(escapeMenu.sprites)
                             break
                         case _:
@@ -113,7 +108,7 @@ def main():
                     if escapeMenu: 
                         sprites.remove(escapeMenu.sprites)
                         escapeMenu = None
-                    optionsMenu = OptionsMenu((SCREEN_WIDTH, SCREEN_HEIGHT), sprites.has(currentFPS))
+                    optionsMenu = OptionsMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), sprites.has(currentFPS))
                     sprites.add(optionsMenu.sprites)
                     break
                 case events.SHOW_FPS:
@@ -126,7 +121,7 @@ def main():
                     if optionsMenu:
                         sprites.remove(optionsMenu.sprites)
                         optionsMenu = None
-                        escapeMenu = EscapeMenu((SCREEN_WIDTH, SCREEN_HEIGHT))
+                        escapeMenu = EscapeMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT))
                         sprites.add(escapeMenu.sprites)
                     else:
                         """
@@ -149,7 +144,7 @@ def main():
                         #removeOtherMenus(sprites, r_menus)
                         [sprites.remove(menu.sprites) for menu in r_menus if menu]
                         for menu in r_menus: menu = None
-                        popMenu = PopulationMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                        popMenu = PopulationMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                         sprites.add(popMenu.sprites)
                     break
                 case events.ECONOMY_MENU:
@@ -158,7 +153,7 @@ def main():
                         #removeOtherMenus(sprites, r_menus)
                         [sprites.remove(menu.sprites) for menu in r_menus if menu]
                         for menu in r_menus: menu = None
-                        ecoMenu = EconomyMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                        ecoMenu = EconomyMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                         sprites.add(ecoMenu.sprites)
                     break
                 case events.RELATIONS_MENU:
@@ -167,7 +162,7 @@ def main():
                         #removeOtherMenus(sprites, r_menus)
                         [sprites.remove(menu.sprites) for menu in r_menus if menu]
                         for menu in r_menus: menu = None
-                        relMenu = RelationsMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                        relMenu = RelationsMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                         sprites.add(relMenu.sprites)
                     break
                 case events.RESOURCES_MENU:
@@ -176,7 +171,7 @@ def main():
                         #removeOtherMenus(sprites, r_menus)
                         [sprites.remove(menu.sprites) for menu in r_menus if menu]
                         for menu in r_menus: menu = None
-                        resMenu = ResourcesMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                        resMenu = ResourcesMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                         sprites.add(resMenu.sprites)
                     break
                 case events.MILITARY_MENU:
@@ -185,11 +180,11 @@ def main():
                         #removeOtherMenus(sprites, r_menus)
                         [sprites.remove(menu.sprites) for menu in r_menus if menu]
                         for menu in r_menus: menu = None
-                        milMenu = MilitaryMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                        milMenu = MilitaryMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                         sprites.add(milMenu.sprites)
                     break
                 # case events.:
-                #     popMenu = FinancialMenu((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
+                #     popMenu = FinancialMenu((d.SCREEN_WIDTH, d.SCREEN_HEIGHT), russia)
                 #     sprites.add(popMenu, popMenu.sprites)
                 #     currentScreen = Screen.POPULATION_MENU
                 
