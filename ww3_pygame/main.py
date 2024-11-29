@@ -6,6 +6,7 @@ import events
 from map_screen import *
 from enum import Enum
 from country import *
+from constants import fonts
 import datetime
 
 class Screen(Enum):
@@ -20,9 +21,12 @@ def removeOtherMenus(sprites, r_menus):
 def main():
     pygame.init()
 
-    SCREEN_WIDTH = 1920 
+    SCREEN_WIDTH = 1920
     SCREEN_HEIGHT = 1080
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+    SCALE_FACTOR_X = SCREEN_WIDTH / 800     #Min supported width
+    SCALE_FACTOR_Y = SCREEN_HEIGHT / 600    #Min supported height
+    
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))#, pygame.FULLSCREEN)
 
     clock = pygame.time.Clock()
     running = True
@@ -51,9 +55,9 @@ def main():
     mapScreen = MapUI((SCREEN_WIDTH, SCREEN_HEIGHT), russia)
     
     currentDay = datetime.datetime.now()
-    currentDaySprite = TextSprite(str(currentDay.strftime("%x")), "georgia", (255,255,255), (100, SCREEN_HEIGHT - 50), 25)
+    currentDaySprite = TextSprite(str(currentDay.strftime("%x")), fonts.DEFAULT_TITLE, (255,255,255), (50 * SCALE_FACTOR_X, SCREEN_HEIGHT - (25 * SCALE_FACTOR_Y)), 25)
     
-    currentFPS = TextSprite("", "arial", (255,255,255), (10,10), 15)
+    currentFPS = TextSprite("", fonts.DEFAULT_TITLE, (255,255,255), (10,10), 15)
     
     while running:
         pygame.event.pump()

@@ -1,5 +1,6 @@
 import pygame
 import fiona
+from constants import fonts
 from shapely.geometry import shape
 
 class Sprite(pygame.sprite.Sprite):
@@ -19,12 +20,12 @@ class ImageSprite(pygame.sprite.Sprite):
         self.rect.center = position
 
 class TextSprite(pygame.sprite.Sprite):
-    def __init__(self, text, family, color, position, size, background=None, bold=False):
+    def __init__(self, text, family, color, position, size, background=None):
         super().__init__()
         self.color = color
         self.background = background
         self.text = text
-        self.font = pygame.font.SysFont(family, int(size * 0.9), bold)
+        self.font = pygame.font.Font(family, size)
         self.image = self.font.render(text, True, color, background)
         self.rect = self.image.get_rect()
         self.rect.center = position
@@ -65,7 +66,7 @@ class UISprite(pygame.sprite.Sprite):
 
 class Button(TextSprite):
     def __init__(self, text, position):
-        super().__init__(text, "georgia", (0,0,0), position, 30, (40, 40, 40))
+        super().__init__(text, fonts.DEFAULT_TITLE, (0,0,0), position, 30, (40, 40, 40))
         self.touching = False
         self.clicked = False
         

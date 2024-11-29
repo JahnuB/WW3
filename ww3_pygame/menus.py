@@ -1,5 +1,5 @@
 from base_sprites import Sprite, Button, TextSprite, UISprite
-from constants import colors
+from constants import colors, fonts
 from buttons import *
 import pygame
 
@@ -11,7 +11,7 @@ class MainMenu:
         x, y = pos
         self.sprites = pygame.sprite.LayeredUpdates()
         self.mmImage = base_sprites.ImageSprite("ww3_pygame/images/russia-map3.png", (x, y + 200))
-        self.title = base_sprites.TextSprite("World War 3", DEFAULT_FONT, (255,255,255), pos, 50)
+        self.title = base_sprites.TextSprite("World War 3", fonts.COUNTRY_TITLE_FONT, (255,255,255), pos, 50)
         self.bgColor = (0,0,0)
        
         self.startButton = StartButton((x, y + 200))
