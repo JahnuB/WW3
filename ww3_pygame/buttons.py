@@ -1,29 +1,29 @@
 import pygame
-import base_sprites
+from base_sprites import ButtonSprite
 from events import *
         
-class StartButton(base_sprites.Button):
+class StartButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Start Game", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(NEXTSCREEN))
         
-class ResumeButton(base_sprites.Button):
+class ResumeButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Resume", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(RESUME))
         
-class OptionsButton(base_sprites.Button):
+class OptionsButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Options", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(OPTIONSMENU))
         
-class ShowFPSButton(base_sprites.Button):
+class ShowFPSButton(ButtonSprite):
     def __init__(self, pos, active):
         super().__init__("Toggle FPS Counter", pos)
         self.active = active
@@ -53,7 +53,7 @@ class ShowFPSButton(base_sprites.Button):
             self.image = self.font.render(self.text, True, self.color, (50, 50, 50) if not self.active else (160, 50, 50))
             self.clicked = False
         
-class BackButton(base_sprites.Button):
+class BackButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Back", pos)
         self.prevScreen = None
@@ -62,7 +62,7 @@ class BackButton(base_sprites.Button):
         pygame.event.post(pygame.event.Event(BACK))
 
         
-class QuitButton(base_sprites.Button):
+class QuitButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Quit", pos)
     
@@ -72,35 +72,35 @@ class QuitButton(base_sprites.Button):
         
 #Map Screen specific buttons
 
-class PopulationButton(base_sprites.Button):
+class PopulationButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Population", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(POPULATION_MENU))
 
-class EconomyButton(base_sprites.Button):
+class EconomyButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Economy", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(ECONOMY_MENU))
 
-class RelationsButton(base_sprites.Button):
+class RelationsButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Relations", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(RELATIONS_MENU))
 
-class ResourcesButton(base_sprites.Button):
+class ResourcesButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Resources", pos)
         
     def whenClicked(self):
         pygame.event.post(pygame.event.Event(RESOURCES_MENU))
 
-class MilitaryButton(base_sprites.Button):
+class MilitaryButton(ButtonSprite):
     def __init__(self, pos):
         super().__init__("Military", pos)
         

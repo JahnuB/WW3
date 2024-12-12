@@ -19,18 +19,16 @@ class MainMenu(UISprite):
         #Add all sprites to sprite list
         self.sprites.add(self.elements.values())
 
-class EscapeMenu:
-    def __init__(self, dimens):
-        width, height = dimens
-        x = width / 2
-        y = height / 2
+class EscapeMenu(UISprite):
+    def __init__(self):
+        super().__init__((d.SCREEN_WIDTH / 4, d.SCREEN_HEIGHT / 4))
         self.sprites = pygame.sprite.LayeredUpdates()
-        self.boxBg = Sprite((300, 400), colors.DEFAULT_MENU_BG, (x, y))
-        self.title = TextSprite("World War 3", DEFAULT_FONT, colors.DEFAULT_TEXT_COLOR, (self.boxBg.rect.centerx, self.boxBg.rect.y + 40), DEFAULT_FONT_SIZE)
-        self.resumeButton = ResumeButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery - 10))
-        self.optionsButton = OptionsButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery + 50))
-        self.quitButton = QuitButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery + 110))
-        self.sprites.add(self.boxBg, self.title, self.resumeButton, self.optionsButton, self.quitButton)
+        self.elements["boxBg"] = Sprite((self.width, self.height), colors.DEFAULT_MENU_BG, (d.SCREEN_WIDTH / 2, d.SCREEN_HEIGHT / 2))
+        #self.elements["title"] = TextSprite("World War 3", fonts.DEFAULT_TITLE, colors.DEFAULT_TEXT_COLOR, (self.boxBg.rect.centerx, self.boxBg.rect.y + 40), DEFAULT_FONT_SIZE)
+        #self.resumeButton = ResumeButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery - 10))
+        #self.optionsButton = OptionsButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery + 50))
+        #self.quitButton = QuitButton((self.boxBg.rect.centerx + 10, self.boxBg.rect.centery + 110))
+        self.sprites.add(self.elements.values())
         
 class OptionsMenu:
     def __init__(self, dimens, fpsActive):
@@ -44,8 +42,9 @@ class OptionsMenu:
         self.fpsButton = ShowFPSButton((self.boxBg.rect.centerx, self.boxBg.rect.y + 150), fpsActive)
         self.sprites.add(self.boxBg, self.title, self.fpsButton, self.backButton)
         
-class PopulationMenu(base_sprites.UISprite):
+class PopulationMenu(UISprite):
     def __init__(self, dimens, country):
+        super().__init__(dimens)
         width, height = dimens
         x = width / 2
         y = height / 2
@@ -219,7 +218,13 @@ class ResourcesMenu(base_sprites.UISprite):
             self.elements[treasure][1].assignNewText(f"{self.country.treasury[treasure][0]:,}"+ " (+" + f"{self.country.treasury[treasure][1]:,}" + ")")
         
 
+class MilitaryMenu(UISprite):
+    def __init__(self):
+        super.__init__((d.SCREEN_HEIGHT / 2, d.SCREEN_WIDTH / 2))
+        self.addElement(TextSprite("${self.country.name} Military"), "military_title", "top_c")
+        self.addElement(TextSprite("${self.country.name} Military"), "military_title", "top_c")
 
+"""
 class MilitaryMenu:
     def __init__(self, dimens, country):
         width, height = dimens
@@ -249,3 +254,4 @@ class MilitaryMenu:
         
         self.sprites.add(self.boxBg, self.backButton, self.countryName,
                          self.infoTextSprites.values())
+                         """
